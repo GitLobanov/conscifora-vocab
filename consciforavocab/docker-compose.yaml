@@ -58,6 +58,17 @@ services:
           memory: 4G
     networks:
       - postgres
+  redis-token:
+    image: redis:7.4.1
+    restart: "no"
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: redis-cli ping
+      interval: 10s
+      timeout: 5s
+      start_period: 10s
+      retries: 5
 
 
 volumes:

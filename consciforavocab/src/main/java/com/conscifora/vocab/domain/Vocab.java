@@ -20,21 +20,22 @@ public class Vocab {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(length = 10)
-    private String languageCode;
+    @Enumerated(EnumType.STRING)
+    private LanguageCode languageCode;
 
     private String word;
-    private String definition;
 
     @ManyToMany(mappedBy = "vocabs")
     private Set<VocabExamples> vocabExamples = new LinkedHashSet<>();
 
-    @ManyToMany(mappedBy = "sourceVocab")
+    @OneToMany(mappedBy = "vocab", orphanRemoval = true)
+    private Set<VocabDefinitions> vocabDefinitions = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "vocabSource", orphanRemoval = true)
     private Set<VocabTranslation> vocabTranslationsSource = new LinkedHashSet<>();
 
-    @ManyToMany(mappedBy = "sourceVocab")
+    @OneToMany(mappedBy = "vocabTarget", orphanRemoval = true)
     private Set<VocabTranslation> vocabTranslationsTarget = new LinkedHashSet<>();
-
 
     @Override
     public final boolean equals(Object object) {

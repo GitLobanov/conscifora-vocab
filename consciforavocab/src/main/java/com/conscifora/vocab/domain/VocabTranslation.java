@@ -18,19 +18,15 @@ public class VocabTranslation {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToMany
-    @JoinTable(name = "vocab_translation_sourceVocab",
-            joinColumns = @JoinColumn(name = "vocabTranslation_id"),
-            inverseJoinColumns = @JoinColumn(name = "sourceVocab_id"))
-    private Set<Vocab> sourceVocab = new LinkedHashSet<>();
-
-    @ManyToMany
-    @JoinTable(name = "vocab_translation_vocabTarget",
-            joinColumns = @JoinColumn(name = "vocabTranslation_id"),
-            inverseJoinColumns = @JoinColumn(name = "vocabTarget_id"))
-    private Set<Vocab> vocabTarget = new LinkedHashSet<>();
-
     @Enumerated(EnumType.STRING)
     private TranslationType translationType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vocab_source_id")
+    private Vocab vocabSource;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vocab_target_id")
+    private Vocab vocabTarget;
 
 }
